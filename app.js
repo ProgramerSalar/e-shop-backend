@@ -1,5 +1,11 @@
 const express = require('express')  // express is module which is store in express 
 const app = express()
+const mogan = require('morgan')
+
+
+
+
+
 
 
 require('dotenv/config')   // access the dotenv file 
@@ -8,7 +14,7 @@ const api = process.env.API_URL   // access the data in .env file
 
 // Middleware
 app.use(express.json())     // express understand the jsong data 
-
+app.use(mogan('tiny'))
 
 
 
