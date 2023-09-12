@@ -1,7 +1,7 @@
 const express = require('express')  // express is module which is store in express 
 const app = express()
 const mogan = require('morgan')
-
+const mongoose = require('mongoose')
 
 
 
@@ -14,7 +14,7 @@ const api = process.env.API_URL   // access the data in .env file
 
 // Middleware
 app.use(express.json())     // express understand the jsong data 
-app.use(mogan('tiny'))
+app.use(mogan('tiny'))   // this morgan labraray have provide your api like this POST /api/v1/products/ 200 49 - 3.022 ms
 
 
 
@@ -40,6 +40,18 @@ app.post(`${api}/products/`, (req, res) => {     // slash is the parameter run t
 
 
 })
+
+
+mongoose.connect(process.env.CONECTION_STRING,{
+    
+})
+.then(() => {
+    console.log("Database connection is ready...")
+})
+.catch((err) => {
+    console.log(err)
+})
+
 
 
 app.listen(3000, 
