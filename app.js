@@ -18,25 +18,54 @@ app.use(mogan('tiny'))   // this morgan labraray have provide your api like this
 
 
 
+const productSchema = mongoose.Schema({
+    name:String,
+    image:String,
+    countInStock:{
+        type:Number,
+        required:true
+    }
+})
+
+
+const Product = mongoose.model('Product', productSchema)
+
+
 
 
 // http://localhost:3000/api/v1/products
-app.get(`${api}/products/`, (req, res) => {     // slash is the parameter run the intital, take to request and response command 
-    const product = {
-        id:1,
-        name:'hair dresser',
-        image:'some_url'
+app.get(`${api}/products/`, async (req, res) => {     // slash is the parameter run the intital, take to request and response command 
+    // const product = {
+    //     id:1,
+    //     name:'hair dresser',
+    //     image:'some_url'
+    // }
+    const productList = await Product.find()
+    if (!productList) {
+        res.status(500).json({success:false})
     }
-    res.send(product)
+    res.send(productList)
 
 
 })
 
 
 app.post(`${api}/products/`, (req, res) => {     // slash is the parameter run the intital, take to request and response command 
-    const newProduct = req.body
-    console.log(newProduct)
-    res.send(newProduct)
+    const product = new Product({
+        name:req.body.name,
+        image:req.body.image,
+        countInStock:req.body.countInStock
+    })
+
+    product.save().then((createdProduct => {
+        res.status(201).json(createdProduct)
+    })).catch((err) => {
+        res.status(500).json({
+            error:err,
+            success:false
+        })
+    })
+    
 
 
 })
@@ -61,3 +90,5 @@ app.listen(3000,
     }
     
     )  // listen the spesific port 
+
+
