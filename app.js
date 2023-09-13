@@ -3,7 +3,11 @@ const app = express()
 const mogan = require('morgan')
 const mongoose = require('mongoose')
 const Product= require('./models/product')
+const cors = require('cors')
 
+
+app.use(cors())
+app.options('*', cors())
 
 // product routers import 
 const productsRouter = require('./routers/products')
