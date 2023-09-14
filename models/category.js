@@ -12,10 +12,7 @@ const categorySchema = mongoose.Schema({
     color:{
         type:String,
     },
-    image:{
-        type:String,
-        default:''
-    }
+    
 
 })
 

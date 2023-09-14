@@ -9,8 +9,7 @@ const cors = require('cors')
 app.use(cors())
 app.options('*', cors())
 
-// product routers import 
-const productsRouter = require('./routers/products')
+
 
 
 
@@ -18,13 +17,28 @@ require('dotenv/config')   // access the dotenv file
 const api = process.env.API_URL   // access the data in .env file 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Middleware
 app.use(express.json())     // express understand the jsong data 
 app.use(mogan('tiny'))   // this morgan labraray have provide your api like this POST /api/v1/products/ 200 49 - 3.022 ms
 
 
-// product routers 
-app.use(`${api}/products/`, productsRouter)
 
 
 
@@ -33,6 +47,44 @@ app.use(`${api}/products/`, productsRouter)
 
 
 
+
+// routers 
+const productsRouter = require('./routers/products')
+const categoryRouter = require('./routers/categories')
+
+
+
+
+app.use(`${api}/products`, productsRouter)
+app.use(`${api}/categories`, categoryRouter)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// database
 mongoose.connect(process.env.CONECTION_STRING,{
     
 })

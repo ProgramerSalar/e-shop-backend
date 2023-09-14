@@ -1,17 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const Product = require('../models/product')
+const {Product} = require('../models/product')
 
 
 
 
 // http://localhost:3000/api/v1/products
 router.get(`/`, async (req, res) => {     // slash is the parameter run the intital, take to request and response command 
-    // const product = {
-    //     id:1,
-    //     name:'hair dresser',
-    //     image:'some_url'
-    // }
     const productList = await Product.find()
     if (!productList) {
         res.status(500).json({success:false})
