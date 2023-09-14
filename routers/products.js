@@ -7,17 +7,8 @@ const { Category } = require('../models/category')
 
 
 // http://localhost:3000/api/v1/products
-// router.get(`/:id`, async (req, res) => {     // slash is the parameter run the intital, take to request and response command 
-//     const product = await Product.findById(req.params.id)
-//     if (!product) {
-//         res.status(500).json({success:false})
-//     }
-//     res.send(product)
-
-
-// })
-router.get(`/`, async (req, res) => {     // slash is the parameter run the intital, take to request and response command 
-    const product = await Product.find().select('name image')
+router.get(`/:id`, async (req, res) => {     // slash is the parameter run the intital, take to request and response command 
+    const product = await Product.findById(req.params.id).populate('category')
     if (!product) {
         res.status(500).json({success:false})
     }
@@ -25,6 +16,18 @@ router.get(`/`, async (req, res) => {     // slash is the parameter run the inti
 
 
 })
+
+
+
+// router.get(`/`, async (req, res) => {     // slash is the parameter run the intital, take to request and response command 
+//     const product = await Product.find().select('name image')
+//     if (!product) {
+//         res.status(500).json({success:false})
+//     }
+//     res.send(product)
+
+
+// })
 
 
 router.post(`/`, async (req, res) => { 
