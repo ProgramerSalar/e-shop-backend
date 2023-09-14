@@ -8,22 +8,22 @@ const productSchema = mongoose.Schema({
     },
     description:{
         type:String,
-        required:true
+        required:true,
     },
     richDescription:{
         type:String,
-        default:''
+        default:'',
     },
     image:{
         type:String,
-        default:''
+        default:'',
     },
     images:[{
-        type:String
+        type:String,
     }],
     brand:{
         type:String,
-        default:''
+        default:'',
     },
     price:{
         type:Number,
@@ -32,13 +32,13 @@ const productSchema = mongoose.Schema({
     category:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Category',
-        required:true
+        required:true,
     },
     countInStock:{
         type:Number,
         required:true,
         min:0,
-        max:255
+        max:255,
     },
     rating:{
         type:Number,
