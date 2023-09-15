@@ -51,12 +51,13 @@ app.use(mogan('tiny'))   // this morgan labraray have provide your api like this
 // routers 
 const productsRouter = require('./routers/products')
 const categoryRouter = require('./routers/categories')
-
+const userRoutes = require('./routers/users')
 
 
 
 app.use(`${api}/products`, productsRouter)
 app.use(`${api}/categories`, categoryRouter)
+app.use(`${api}/users`,userRoutes )
 
 
 
