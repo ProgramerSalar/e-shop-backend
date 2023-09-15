@@ -32,8 +32,8 @@ const api = process.env.API_URL   // access the data in .env file
 // Middleware
 app.use(express.json())     // express understand the jsong data 
 app.use(mogan('tiny'))   // this morgan labraray have provide your api like this POST /api/v1/products/ 200 49 - 3.022 ms
-app.use(authJwt())
-app.use(errorHandler)
+// app.use(authJwt())
+// app.use(errorHandler)
 
 
 
@@ -48,6 +48,7 @@ app.use(errorHandler)
 const productsRouter = require('./routers/products')
 const categoryRouter = require('./routers/categories')
 const userRoutes = require('./routers/users')
+const orderRoutes = require('./routers/order')
 
 
 
@@ -55,7 +56,9 @@ const userRoutes = require('./routers/users')
 
 app.use(`${api}/products`, productsRouter)
 app.use(`${api}/categories`, categoryRouter)
-app.use(`${api}/users`,userRoutes )
+app.use(`${api}/users`, userRoutes )
+app.use(`${api}/orders`, orderRoutes )
+
 
 
 
