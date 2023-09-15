@@ -6,9 +6,20 @@ const mongoose = require('mongoose')
 
 
 
-// http://localhost:3000/api/v1/products
-router.get(`/:id`, async (req, res) => {     // slash is the parameter run the intital, take to request and response command 
+
+router.get(`/:id`, async (req, res) => {   
     const product = await Product.findById(req.params.id).populate('category')
+    if (!product) {
+        res.status(500).json({success:false})
+    }
+    res.send(product)
+
+
+})
+
+
+router.get(`/`, async (req, res) => {   
+    const product = await Product.find()
     if (!product) {
         res.status(500).json({success:false})
     }
@@ -145,8 +156,15 @@ router.get(`/get/featured/:count`, async (req, res) => {
 
 
 
-router.get('/', async(req,res)=>{
-    const product = await Product.find().select('id name')
+router.get(``, async(req,res)=>{
+
+    // localhost:3000/api/v1/products?categories=234532,34211
+    let filter = {}
+    if(req.query.categories){
+        filter = {category:req.query.categories.split(',')}
+    }
+
+    const product = await Product.find({category:filter}).populate('category')
     if (!product){
         res.status(500).json({
             message:'The category with the given id is not found'
