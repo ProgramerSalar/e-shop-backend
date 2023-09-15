@@ -128,6 +128,21 @@ router.get(`/get/count`, async (req, res) => {
 
 
 
+router.get(`/get/featured/:count`, async (req, res) => {    
+    const count = req.params.count ? req.params.count : 0
+    let products = await Product.find({isFeatured:true}).limit(+count)  // plus use b/c count are string and limit get number (string convert to number using + )
+    if (!products) {
+        res.status(500).json({success:false})
+    }
+    res.send({
+        products:products
+    })
+
+
+})
+
+
+
 
 
 router.get('/', async(req,res)=>{
