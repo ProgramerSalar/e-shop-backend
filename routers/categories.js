@@ -74,7 +74,7 @@ router.put('/:id', async (req,res)=>{
 })
 
 // get the the category detail
-// router.get('/:id', async(req,res)=>{
+// router.get('/', async(req,res)=>{
 //     const category = await Category.findById(req.params.id)
 //     if (!category){
 //         res.status(500).json({

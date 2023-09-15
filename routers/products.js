@@ -114,4 +114,30 @@ router.delete('/:id', (req,res)=>{
 
 
 
+router.get(`/get/count`, async (req, res) => {    
+    let productCount = await Product.countDocuments()
+    if (!productCount) {
+        res.status(500).json({success:false})
+    }
+    res.send({
+        productCount:productCount
+    })
+
+
+})
+
+
+
+
+
+router.get('/', async(req,res)=>{
+    const product = await Product.find().select('id name')
+    if (!product){
+        res.status(500).json({
+            message:'The category with the given id is not found'
+        })
+    }
+    res.status(200).send(product)
+})
+
 module.exports = router
