@@ -155,7 +155,7 @@ router.get(`/get/featured/:count`, async (req, res) => {
 
 
 
-
+// in this paramars are get the value using the category 
 router.get(``, async(req,res)=>{
 
     // localhost:3000/api/v1/products?categories=234532,34211
