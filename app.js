@@ -5,6 +5,8 @@ const mogan = require('morgan')
 const mongoose = require('mongoose')
 const Product= require('./models/product')
 const cors = require('cors')
+const errorHandler  = require('./helpers/error-handler')
+
 
 
 app.use(cors())
@@ -39,6 +41,7 @@ const api = process.env.API_URL   // access the data in .env file
 app.use(express.json())     // express understand the jsong data 
 app.use(mogan('tiny'))   // this morgan labraray have provide your api like this POST /api/v1/products/ 200 49 - 3.022 ms
 app.use(authJwt())
+app.use(errorHandler)
 
 
 
@@ -53,6 +56,7 @@ app.use(authJwt())
 const productsRouter = require('./routers/products')
 const categoryRouter = require('./routers/categories')
 const userRoutes = require('./routers/users')
+
 
 
 
