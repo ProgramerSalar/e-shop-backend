@@ -6,16 +6,8 @@ const mongoose = require('mongoose')
 const Product= require('./models/product')
 const cors = require('cors')
 const errorHandler  = require('./helpers/error-handler')
-
-
-
 app.use(cors())
 app.options('*', cors())
-
-
-
-
-
 require('dotenv/config')   // access the dotenv file 
 const api = process.env.API_URL   // access the data in .env file 
 
