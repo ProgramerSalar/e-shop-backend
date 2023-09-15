@@ -1,3 +1,4 @@
+const authJwt = require('./helpers/jwt')
 const express = require('express')  // express is module which is store in express 
 const app = express()
 const mogan = require('morgan')
@@ -37,7 +38,7 @@ const api = process.env.API_URL   // access the data in .env file
 // Middleware
 app.use(express.json())     // express understand the jsong data 
 app.use(mogan('tiny'))   // this morgan labraray have provide your api like this POST /api/v1/products/ 200 49 - 3.022 ms
-
+app.use(authJwt())
 
 
 
@@ -52,6 +53,7 @@ app.use(mogan('tiny'))   // this morgan labraray have provide your api like this
 const productsRouter = require('./routers/products')
 const categoryRouter = require('./routers/categories')
 const userRoutes = require('./routers/users')
+
 
 
 
