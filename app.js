@@ -32,8 +32,10 @@ const api = process.env.API_URL   // access the data in .env file
 // Middleware
 app.use(express.json())     // express understand the jsong data 
 app.use(mogan('tiny'))   // this morgan labraray have provide your api like this POST /api/v1/products/ 200 49 - 3.022 ms
-// app.use(authJwt())
-// app.use(errorHandler)
+app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
+app.use(authJwt())
+app.use(errorHandler)
+
 
 
 

@@ -15,6 +15,7 @@ function authJwt() {
         path:[
 
             // without authentication api product and categories are use it 
+            {url: /\/public\/uploads(.*)/ , methods: ['GET', 'OPTIONS'] },
             {url: /\/api\/v1\/products(.*)/ , methods: ['GET', 'OPTIONS'] },
             {url: /\/api\/v1\/categories(.*)/ , methods: ['GET', 'OPTIONS'] },
 
