@@ -63,12 +63,16 @@ router.get(`/`, async (req, res) => {
 router.post(`/:id`, uploadOption.single('image'), async (req, res) => { 
 
     const category = await Category.findById(req.body.category)
-    const filename = req.file.filename
-    const basePath = `${req.protocol}://${req.get('host')}/public/upload/`
-
     if (!category){
         return res.status(400).send('Invalid Category')
     }
+
+    const file = req.file;
+    if (!file) return res.status(400).send('No image in the request');
+    const filename = req.file.filename
+    
+    const basePath = `${req.protocol}://${req.get('host')}/public/upload/`
+
     let product = new Product({
         name:req.body.name,
         description:req.body.description,
@@ -95,12 +99,18 @@ router.post(`/:id`, uploadOption.single('image'), async (req, res) => {
 router.post(`/`, uploadOption.single('image'), async (req, res) => { 
 
     const category = await Category.find()
-    const filename = req.file.filename
-    const basePath = `${req.protocol}://${req.get('host')}/public/upload/`
-
     if (!category){
         return res.status(400).send('Invalid Category')
     }
+
+    const file = req.file;
+    if (!file) return res.status(400).send('No image in the request');
+    const filename = req.file.filename
+    
+
+    const basePath = `${req.protocol}://${req.get('host')}/public/upload/`
+
+    
     let product = new Product({
         name:req.body.name,
         description:req.body.description,
@@ -137,15 +147,29 @@ router.put('/:id', async (req,res)=>{
         return res.status(400).send('Invalid Category')
     }
 
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(400).send('Invalid Product!');
+
+    const file = req.file;
+    let imagepath;
+
+    if (file) {
+        const fileName = file.filename;
+        const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
+        imagepath = `${basePath}${fileName}`;
+    } else {
+        imagepath = product.image;
+    }
 
 
-    const product = await Product.findByIdAndUpdate(
+
+    const updatedProduct  = await Product.findByIdAndUpdate(
         req.params.id,
         {
         name:req.body.name,
         description:req.body.description,
         richDescription:req.body.richDescription,
-        image:req.body.image,
+        image:imagepath,
         brand:req.body.brand,
         price:req.body.price,
         category:req.body.category,
@@ -158,12 +182,12 @@ router.put('/:id', async (req,res)=>{
             new:true
         }
     )
-    if(!product){
+    if(!updatedProduct ){
         return res.status(500).send('the product cannot be !')
 
     }
     
-    res.send(product)
+    res.send(updatedProduct )
 })
 
 
