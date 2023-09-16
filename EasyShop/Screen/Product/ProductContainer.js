@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Text, View } from 'react-native'
-import {ProductList} from './ProductList'
+import ProductList from './ProductList'
 
 const data = require('../../assets/data/products.json')
 
-
-export const ProductContainer = () => {
+const ProductContainer = () => {
 
     const [products, setProducts] = useState([])
     useEffect(() => {
@@ -25,11 +24,22 @@ export const ProductContainer = () => {
                 <FlatList
                     data={products}
                     renderItem={({ item }) =>
-                       <ProductList key={item.id} item={item} />
+                    // <Text>{item.brand}</Text>
+                    <ProductList 
+                    key={item.id}
+                    item={item}
+                    />
+                        
+                       
 
                     }
-                    keyExtractor={item => item.name}
-                    horizontal />
+                    keyExtractor={(item) => item.name}
+                    horizontal
+
+
+                     />
+                    
+                    <ProductList/>
 
             </View>
 
@@ -37,3 +47,6 @@ export const ProductContainer = () => {
         </View>
     )
 }
+
+
+export default ProductContainer;
