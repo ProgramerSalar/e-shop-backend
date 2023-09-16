@@ -3,6 +3,23 @@ const router = express.Router()
 const {Product} = require('../models/product')
 const { Category } = require('../models/category')
 const mongoose = require('mongoose')
+const multer = require('multer')
+
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {  // cb is call back 
+      cb(null, 'public/uploads')
+    },
+    filename: function (req, file, cb) {
+      const filename = file.originalname.split(' ').join('-')
+      cb(null, filename + '-' + Date.now())
+    }
+  })
+  
+  const uploadOption = multer({ storage: storage })
+
+
 
 
 
@@ -31,9 +48,12 @@ router.get(`/`, async (req, res) => {
 
 
 
-router.post(`/:id`, async (req, res) => { 
+router.post(`/:id`, uploadOption.single('image'), async (req, res) => { 
 
     const category = await Category.findById(req.body.category)
+    const filename = req.file.filename
+    const basePath = `${req.protocol}://${req.get('host')}/public/upload/`
+
     if (!category){
         return res.status(400).send('Invalid Category')
     }
@@ -41,7 +61,39 @@ router.post(`/:id`, async (req, res) => {
         name:req.body.name,
         description:req.body.description,
         richDescription:req.body.richDescription,
-        image:req.body.image,
+        image:`${basePath}${filename}`,     //"http://localhost:3000/public/upload/image-232323"
+        brand:req.body.brand,
+        price:req.body.price,
+        category:req.body.category,
+        countInStock:req.body.countInStock,
+        rating:req.body.rating,
+        numReview:req.body.numReview,
+        isFeatured:req.body.isFeatured,
+
+        
+    })
+    product = await product.save();
+    if(!product){
+        return res.status(500).send('The Product cannot be created')
+    }
+    res.send(product)
+})
+
+
+router.post(`/`, uploadOption.single('image'), async (req, res) => { 
+
+    const category = await Category.find()
+    const filename = req.file.filename
+    const basePath = `${req.protocol}://${req.get('host')}/public/upload/`
+
+    if (!category){
+        return res.status(400).send('Invalid Category')
+    }
+    let product = new Product({
+        name:req.body.name,
+        description:req.body.description,
+        richDescription:req.body.richDescription,
+        image:`${basePath}${filename}`,     //"http://localhost:3000/public/upload/image-232323"
         brand:req.body.brand,
         price:req.body.price,
         category:req.body.category,
