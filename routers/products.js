@@ -5,15 +5,27 @@ const { Category } = require('../models/category')
 const mongoose = require('mongoose')
 const multer = require('multer')
 
-
+const FILE_TYPE_MAP = {
+    'image/png': 'png',
+    'image/jpeg': 'jpeg',
+    'image/jpg': 'jpg',
+};
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {  // cb is call back 
-      cb(null, 'public/uploads')
+        const isValid = FILE_TYPE_MAP[file.mimetype]
+        let uploadError = new Error('invalid image Type')
+
+        if (isValid) {
+            uploadError = null;
+        }
+        
+        cb(uploadError, 'public/uploads')
     },
     filename: function (req, file, cb) {
-      const filename = file.originalname.split(' ').join('-')
-      cb(null, filename + '-' + Date.now())
+      const fileName = file.originalname.split(' ').join('-')
+      const extension = FILE_TYPE_MAP[file.mimetype]  //minetype is recognized which type of image are upload in media file
+      cb(null, `${fileName}-${Date.now()}.${extension}`)
     }
   })
   
